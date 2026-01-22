@@ -17,7 +17,7 @@ def preprocess_tmdb_data(input_filename="movies_manual.csv", output_filename="mo
     df = pd.read_csv(input_path)
     print(f"전처리 시작 - 원본 데이터 크기: {df.shape}")
 
-    cols = ['id', 'title', 'budget', 'revenue', 'runtime', 'genres', 'release_date', 'vote_count', 'vote_average']
+    cols = ['id', 'title', 'original_language', 'budget', 'revenue', 'runtime', 'genres', 'release_date', 'vote_count', 'vote_average']
     # 혹시 모를 오류 방지를 위해 실제로 존재하는 컬럼만 선택
     available_cols = [c for c in cols if c in df.columns]
     df = df[available_cols]
@@ -49,11 +49,19 @@ def preprocess_tmdb_data(input_filename="movies_manual.csv", output_filename="mo
     encoder_path = os.path.join(save_dir, "genre_encoder.pkl")
     joblib.dump(le, encoder_path)
 
+    # 언어 인코딩 (Label Encoding)
+    le_lang = LabelEncoder()
+    df['lang_encoded'] = le_lang.fit_transform(df['original_language'].astype(str))
+
+    # 언어 인코더 저장
+    encoder_path = os.path.join(save_dir, 'language_encoder.pkl')
+    joblib.dump(le_lang, encoder_path)
+
     # 날짜 데이터 처리 (연도 추출)
     df['release_year'] = pd.to_datetime(df['release_date']).dt.year
 
     # 불필요한 원본 컬럼 삭제
-    df_clean = df.drop(['genres', 'release_date','main_genre'], axis=1)
+    df_clean = df.drop(['genres', 'original_language', 'release_date','main_genre'], axis=1)
 
     # 결과 저장 (상대 경로 폴더 확인 후 저장)
     if not os.path.exists(save_dir):
