@@ -1,5 +1,5 @@
 # MLops
-
+- 실행 기준: docker compose run --rm pipeline
 ## 프로젝트 개요
 본 프로젝트는 배치 기반 추천 시스템을 위한 MLOps 환경을 구축하는 것을 목표로 한다.  
 데이터 수집 → 전처리 → 모델 학습 → 평가 → 배치 추론 → API 서빙까지의 전 과정을 자동화하며,  
@@ -17,15 +17,15 @@ Airflow와 Docker를 활용해 재현 가능하고 운영 가능한 추천 파�
 ---
 
 ## 프로젝트 구조
-src/
-data/ # 데이터 로딩 및 전처리
-train/ # 모델 학습 및 평가
-batch/ # 배치 추론 및 추천 결과 생성
-api/ # FastAPI 기반 추천 결과 서빙
-db/ # DB 연결 및 쿼리
-dags/ # Airflow DAG 정의
-docker/ # Dockerfile 및 컨테이너 설정
-configs/ # 환경 및 파이프라인 설정 파일
+- src/
+- data/ # 데이터 로딩 및 전처리
+- train/ # 모델 학습 및 평가
+- batch/ # 배치 추론 및 추천 결과 생성
+- api/ # FastAPI 기반 추천 결과 서빙
+- db/ # DB 연결 및 쿼리
+- dags/ # Airflow DAG 정의
+- docker/ # Dockerfile 및 컨테이너 설정
+- configs/ # 환경 및 파이프라인 설정 파일
 
 
 ---
